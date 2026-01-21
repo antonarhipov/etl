@@ -6,13 +6,18 @@ import org.springframework.context.annotation.Bean;
 import org.testcontainers.mysql.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+/**
+ * Testcontainers configuration for MySQL integration tests.
+ */
 @TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {
+public class TestcontainersConfiguration {
 
     @Bean
     @ServiceConnection
-    MySQLContainer mysqlContainer() {
-        return new MySQLContainer(DockerImageName.parse("mysql:latest"));
+    public MySQLContainer mysqlContainer() {
+        return new MySQLContainer(DockerImageName.parse("mysql:8.0"))
+                .withDatabaseName("etl_test")
+                .withUsername("test")
+                .withPassword("test");
     }
-
 }
